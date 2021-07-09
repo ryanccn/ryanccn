@@ -23,6 +23,6 @@ jobs:
         run: |
           git config --global user.email "70191398+ryanccn@users.noreply.github.com"
           git config --global user.name "Ryan Cao"
-          git add snake.gif snake.svg
+          git add images/snake.gif images/snake.svg
           git commit -m "[automated] update snakes"
           git push
