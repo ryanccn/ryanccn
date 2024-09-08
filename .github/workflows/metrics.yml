@@ -1,0 +1,69 @@
+name: Metrics
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+jobs:
+  github-metrics:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: lowlighter/metrics@latest
+        with:
+          # Basic configurations
+          token: ${{ secrets.METRICS_TOKEN }}
+          user: ryanccn
+          template: classic
+          base: header, activity, community, repositories, metadata
+
+          config_timezone: Asia/Shanghai
+
+          # Output settings
+          optimize: css, xml, svg
+          output_action: commit
+          committer_message: "chore: update metrics"
+
+          # General config
+          repositories_skipped: ryanccn/dotfiles
+          plugin_activity_visibility: public
+
+          # Miscellaneous coding habits
+          plugin_habits: yes
+          plugin_habits_charts_type: classic
+          plugin_habits_days: 14
+          plugin_habits_facts: yes
+          plugin_habits_from: 200
+          plugin_habits_languages_limit: 8
+
+          # Contributions calendar
+          plugin_calendar: yes
+          plugin_calendar_limit: 1
+
+          # Languages
+          plugin_languages: yes
+          plugin_languages_categories: markup, programming
+          plugin_languages_colors: github
+          plugin_languages_limit: 10
+          plugin_languages_sections: most-used
+          plugin_languages_threshold: 0%
+          plugin_languages_details: bytes-size, percentage
+
+          # Lines of code changes
+          plugin_lines: yes
+          plugin_lines_delay: 10
+
+          # Notable contributions
+          plugin_notable: yes
+          plugin_notable_from: organization
+          plugin_notable_types: commit
+
+          # Website Lighthouse benchmarks
+          plugin_pagespeed: yes
+          plugin_pagespeed_url: ryanccn.dev
+          plugin_pagespeed_token: ${{ secrets.PAGESPEED_TOKEN }}
+          plugin_pagespeed_detailed: yes
